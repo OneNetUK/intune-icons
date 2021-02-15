@@ -1,7 +1,7 @@
 ---
 name: Add icon
 about: Suggest an icon to add to the repository
-title: 'Add an icon'
+title: 'Add icon to the repository'
 labels: 'icon'
 assignees: ''
 ---
