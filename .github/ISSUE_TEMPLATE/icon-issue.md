@@ -1,7 +1,7 @@
 ---
-name: Icon Issue
+name: Icon issue
 about: Create an issue report for an icon or set of icons in the repo
-title: 'Icon Issue'
+title: 'An existing icon has an issue'
 labels: 'icon'
 assignees: ''
 ---
