@@ -4,11 +4,11 @@
 #>
 
 # Variables
-$utils = Join-Path $projectRoot "utils"
-$pngout = Join-Path $utils "pngout.exe"
-$icons = Join-Path $projectRoot "icons"
-$scripts = Join-Path $projectRoot "scripts"
-$imageHashes = Join-Path $scripts "ImageHashes.json"
+$bin = Join-Path -Path $projectRoot -ChildPath "bin"
+$pngout = Join-Path -Path $bin -ChildPath "pngout.exe"
+$icons = Join-Path -Path $projectRoot -ChildPath "icons"
+$scripts = Join-Path -Path $projectRoot -ChildPath "scripts"
+$imageHashes = Join-Path -Path $scripts -ChildPath "ImageHashes.json"
 
 # Dot source Invoke-Process.ps1. Prevent 'RemoteException' error when running specific git commands
 . $projectRoot\ci\Invoke-Process.ps1
@@ -16,14 +16,20 @@ $imageHashes = Join-Path $scripts "ImageHashes.json"
 #region Optimise images
 # Read in the existing hashes file
 If (Test-Path -Path $imageHashes) {
-    $pngHashes = Get-Content -Path $imageHashes -Verbose | ConvertFrom-Json
+    try {
+        $pngHashes = Get-Content -Path $imageHashes -Verbose | ConvertFrom-Json
+    }
+    catch {
+        Throw $_
+        Break
+    }
 }
 
 # Get all images in the icons folder
 $images = Get-ChildItem -Path $icons -Recurse -Include *.*
 
 # Optimse each file if the hash does not match
-Push-Location $icons
+Push-Location -Path $icons
 $cleanUp = @()
 ForEach ($image in $images) {
     $hash = Get-FileHash -Path $image.FullName -Verbose
@@ -46,7 +52,7 @@ ForEach ($file in $cleanUp) { Remove-Item -Path $file -Force -Verbose }
 Pop-Location
 
 # Read the hashes from all PNG files and output to file for next run
-$pngImages = Get-ChildItem -Path $icons -Recurse -Include *.png
+$pngImages = Get-ChildItem -Path $icons -Recurse -Include "*.png"
 $pngHashes = @{}
 ForEach ($png in $pngImages) {
     $hash = Get-FileHash -Path $png.FullName

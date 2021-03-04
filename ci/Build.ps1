@@ -3,7 +3,7 @@
         AppVeyor build script.
 #>
 
-If (Get-Variable -Name projectRoot -ErrorAction SilentlyContinue) {
+If (Get-Variable -Name "projectRoot" -ErrorAction "SilentlyContinue") {
 
 }
 Else {
