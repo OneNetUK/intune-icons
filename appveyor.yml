@@ -5,7 +5,7 @@ max_jobs: 1
 image: WMF 5
 environment:
   GitHubKey:
-    secure: unWb9ORoL3oo22K6z2U2fZ+AdBmv75laNb7jibBwQCMGv9u8Cs2GayQBGjkqfPro
+    secure: bGxozoCJoYVeoQCF1W+tLhKbjvFoyr7zGcc2A57UiP356gpE7k8/fhqH6NPi8eQ2
 install:
 - ps: . .\ci\Install.ps1
 build_script:
